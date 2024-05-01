@@ -1,15 +1,33 @@
-//import css from './Feedback.module.css'
+//import css from "./Feedback.module.css";
 
-const Feedback = () => {
+const Feedback = ({ good, neutral, bad }) => {
+    const totalFeedback = good + neutral + bad;
+    const positiveFeedback = totalFeedback ? Math.round((good / totalFeedback) * 100) : 0;
+
     return (
-        <div>
-            <p>Good:</p> 
-            <p>Neutral:</p>
-            <p>Bad:</p>
-            <p>Total:</p>
-            <p>Positive:</p>
-        </div>
-)
+        <ul>
+            <li>
+                <span>Good:</span>
+                <span>{ good }</span>
+            </li> 
+            <li>
+                <span>Neutral:</span>
+                <span>{ neutral }</span>
+            </li>
+            <li>
+                <span>Bad:</span>
+                <span>{ bad }</span>
+            </li>
+            <li>
+                <span>Total:</span>
+                <span>{ totalFeedback }</span>
+            </li>
+            <li>
+                <span>Positive:</span>
+                <span>{positiveFeedback}%</span>
+            </li>
+        </ul>
+    )
 }
 
 export default Feedback;

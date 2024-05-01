@@ -1,14 +1,18 @@
-//import css from './Options.module.css'
+import css from './Options.module.css'
 
-const Options = () => {
+const updateFeedback = feedbackType => {
+
+}
+
+const Options = ({updateFeedback, resetFeedback}) => {
     return (
         <div>
-            <button>Good</button>
-            <button>Neutral</button>
-            <button>Bad</button>
-            <button>Reset</button>
+            <button onClick={() => updateFeedback('good')}>Good</button>
+            <button onClick={() => updateFeedback('neutral')}>Neutral</button>
+            <button onClick={() => updateFeedback('bad')}>Bad</button>
+            <button onClick={resetFeedback}>Reset</button>
         </div>
-    )
+    );
 }
 
 export default Options;
