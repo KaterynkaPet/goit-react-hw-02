@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Feedback from './feedback/Feedback.jsx'
 import Options from './options/Options.jsx'
@@ -8,17 +8,23 @@ import Notification from './notification/Notification.jsx';
 
 
 function App() {
-  const [feedback, setFeedback] = useState({
+  const initialFeedback = JSON.parse(localStorage.getItem('feedback')) || {
     good: 0,
     neutral: 0,
     bad: 0
-  });
-  
+  };
+
+  const [feedback, setFeedback] = useState(initialFeedback);
+
+  useEffect(() => {
+    localStorage.setItem('feedback', JSON.stringify(feedback));
+  }, [feedback]);
+    
   const updateFeedback = feedbackType => {
-    setFeedback({
-      ...feedback,
-      [feedbackType]: feedback[feedbackType] + 1
-    });
+    setFeedback(prevFeedback => ({
+      ...prevFeedback,
+      [feedbackType]: prevFeedback[feedbackType] + 1
+    }));
   };
 
   const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
@@ -33,9 +39,9 @@ function App() {
       <Options
         updateFeedback={updateFeedback}
         totalFeedback={totalFeedback}
-      resetFeedback={resetFeedback} />
+        resetFeedback={resetFeedback} />
       {totalFeedback > 0 ? (
-      <Feedback feedback={feedback} />
+      <Feedback feedback={feedback} totalFeedback={totalFeedback} />
       ) : (
       <Notification message="No feedback yet" />
         )}
